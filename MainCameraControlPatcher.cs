@@ -8,11 +8,9 @@ namespace SubnauticaSnapTurningMod
     [HarmonyPatch(typeof(MainCameraControl))]
     internal class MainCameraControlPatcher
     {
-        public static SnapTurningConfig Config { get; } = new SnapTurningConfig();
-
-        private static float SnapAngle => Config.SnapAngles[Config.SnapAngleChoiceIndex];
-        private static float SeamothSnapAngle => Config.SnapAngles[Config.SeamothAngleChoiceIndex];
-        private static float PrawnSnapAngle => Config.SnapAngles[Config.PrawnAngleChoiceIndex];
+        private static float SnapAngle => SnapTurningConfig.Config.SnapAngles[SnapTurningConfig.Config.SnapAngleChoiceIndex];
+        private static float SeamothSnapAngle => SnapTurningConfig.Config.SnapAngles[SnapTurningConfig.Config.SeamothAngleChoiceIndex];
+        private static float PrawnSnapAngle => SnapTurningConfig.Config.SnapAngles[SnapTurningConfig.Config.PrawnAngleChoiceIndex];
         private static bool IsInPrawnSuit => Player.main.inExosuit;
         private static bool IsInSeamoth => Player.main.inSeamoth;
         public static bool ShouldResetControllerHAxis;
@@ -21,16 +19,16 @@ namespace SubnauticaSnapTurningMod
         [HarmonyPrefix]
         public static bool Prefix()
         {
-            var isIgnoringSeamoth = IsInSeamoth && !Config.EnableSeamoth;
-            var isIgnoringPrawn = IsInPrawnSuit && !Config.EnablePrawn;
-            if (!Config.EnableSnapTurning || isIgnoringSeamoth || isIgnoringPrawn)
+            var isIgnoringSeamoth = IsInSeamoth && !SnapTurningConfig.Config.EnableSeamoth;
+            var isIgnoringPrawn = IsInPrawnSuit && !SnapTurningConfig.Config.EnablePrawn;
+            if (!SnapTurningConfig.Config.EnableSnapTurning || isIgnoringSeamoth || isIgnoringPrawn)
             {
                 ShouldResetControllerHAxis = false;
                 return true; //Enter vanilla method
             }
             
-            var didLookRight = GameInput.GetButtonDown(GameInput.Button.LookRight) || KeyCodeUtils.GetKeyDown(Config.KeybindKeyRight);
-            var didLookLeft = GameInput.GetButtonDown(GameInput.Button.LookLeft) || KeyCodeUtils.GetKeyDown(Config.KeybindKeyLeft);
+            var didLookRight = GameInput.GetButtonDown(GameInput.Button.LookRight) || KeyCodeUtils.GetKeyDown(SnapTurningConfig.Config.KeybindKeyRight);
+            var didLookLeft = GameInput.GetButtonDown(GameInput.Button.LookLeft) || KeyCodeUtils.GetKeyDown(SnapTurningConfig.Config.KeybindKeyLeft);
             //var isLookingLeft = GameInput.GetButtonHeld(GameInput.Button.LookLeft);
             //var isLookingRight = GameInput.GetButtonHeld(GameInput.Button.LookRight);
             var isLooking = didLookLeft || didLookRight;// || isLookingLeft || isLookingRight;

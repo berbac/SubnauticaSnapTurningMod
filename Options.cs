@@ -15,8 +15,6 @@ public class Options : ModOptions
     private const string CHOICE_CHANGED_ID_SEAMOTH_ANGLE = "SeamothAngleId";
     private const string CHOICE_CHANGED_ID_PRAWN_ANGLE = "PrawnAngleId";
 
-    public static SnapTurningConfig Config { get; } = new SnapTurningConfig();
-
     public Options() : base("Snap Turning")
     {
         ToggleChanged += Options_ToggleChanged;
@@ -29,19 +27,19 @@ public class Options : ModOptions
         switch (e.Id)
         {
             case TOGGLE_CHANGED_ID_SNAP_TURNING:
-                Config.EnableSnapTurning = e.Value;
+                SnapTurningConfig.Config.EnableSnapTurning = e.Value;
                 PlayerPrefsExtra.SetBool(PLAYER_PREF_KEY_TOGGLE_SNAP_TURNING, e.Value);
-                Config.Save();
+                SnapTurningConfig.Config.Save();
                 break;
             case TOGGLE_CHANGED_ID_SEAMOTH:
-                Config.EnableSeamoth = e.Value;
+                SnapTurningConfig.Config.EnableSeamoth = e.Value;
                 PlayerPrefsExtra.SetBool(PLAYER_PREF_KEY_TOGGLE_SEAMOTH, e.Value);
-                Config.Save();
+                SnapTurningConfig.Config.Save();
                 break;
             case TOGGLE_CHANGED_ID_PRAWN:
-                Config.EnablePrawn = e.Value;
+                SnapTurningConfig.Config.EnablePrawn = e.Value;
                 PlayerPrefsExtra.SetBool(PLAYER_PREF_KEY_TOGGLE_PRAWN, e.Value);
-                Config.Save();
+                SnapTurningConfig.Config.Save();
                 break;
         }
     }
@@ -51,19 +49,19 @@ public class Options : ModOptions
         switch (e.Id)
         {
             case CHOICE_CHANGED_ID_SNAP_ANGLE:
-                Config.SnapAngleChoiceIndex = e.Index;
+                SnapTurningConfig.Config.SnapAngleChoiceIndex = e.Index;
                 PlayerPrefs.SetInt(PLAYER_PREF_KEY_SNAP_ANGLE, e.Index);
-                Config.Save();
+                SnapTurningConfig.Config.Save();
                 break;
             case CHOICE_CHANGED_ID_SEAMOTH_ANGLE:
-                Config.SeamothAngleChoiceIndex = e.Index;
+                SnapTurningConfig.Config.SeamothAngleChoiceIndex = e.Index;
                 PlayerPrefs.SetInt(PLAYER_PREF_KEY_TOGGLE_SEAMOTH, e.Index);
-                Config.Save();
+                SnapTurningConfig.Config.Save();
                 break;
             case CHOICE_CHANGED_ID_PRAWN_ANGLE:
-                Config.PrawnAngleChoiceIndex = e.Index;
+                SnapTurningConfig.Config.PrawnAngleChoiceIndex = e.Index;
                 PlayerPrefs.SetInt(PLAYER_PREF_KEY_TOGGLE_PRAWN, e.Index);
-                Config.Save();
+                SnapTurningConfig.Config.Save();
                 break;
         }
     }
@@ -72,35 +70,35 @@ public class Options : ModOptions
     {
         if (e.Id == "exampleKeybindLeft")
         {
-            Config.KeybindKeyLeft = e.Key;
+            SnapTurningConfig.Config.KeybindKeyLeft = e.Key;
             PlayerPrefsExtra.SetKeyCode("SMLHelperExampleModKeybindLeft", e.Key);
-            Config.Save();
+            SnapTurningConfig.Config.Save();
         }
         if (e.Id == "exampleKeybindRight")
         {
-            Config.KeybindKeyRight = e.Key;
+            SnapTurningConfig.Config.KeybindKeyRight = e.Key;
             PlayerPrefsExtra.SetKeyCode("SMLHelperExampleModKeybindRight", e.Key);
-            Config.Save();
+            SnapTurningConfig.Config.Save();
         }
     }
 
     public override void BuildModOptions()
     {
-        Config.Load();
-        AddToggleOption(TOGGLE_CHANGED_ID_SNAP_TURNING, "Enabled", Config.EnableSnapTurning);
-        AddChoiceOption(CHOICE_CHANGED_ID_SNAP_ANGLE, "Angle", new string[] { "45", "90", "22.5" }, Config.SnapAngleChoiceIndex);
+        SnapTurningConfig.Config.Load();
+        AddToggleOption(TOGGLE_CHANGED_ID_SNAP_TURNING, "Enabled", SnapTurningConfig.Config.EnableSnapTurning);
+        AddChoiceOption(CHOICE_CHANGED_ID_SNAP_ANGLE, "Angle", new string[] { "45", "90", "22.5" }, SnapTurningConfig.Config.SnapAngleChoiceIndex);
 
         if (!GameInput.IsPrimaryDeviceGamepad())
         {
-            AddKeybindOption("exampleKeybindLeft", "Keyboard Left", GameInput.Device.Keyboard, Config.KeybindKeyLeft);
-            AddKeybindOption("exampleKeybindRight", "Keyboard Right", GameInput.Device.Keyboard, Config.KeybindKeyRight);
+            AddKeybindOption("exampleKeybindLeft", "Keyboard Left", GameInput.Device.Keyboard, SnapTurningConfig.Config.KeybindKeyLeft);
+            AddKeybindOption("exampleKeybindRight", "Keyboard Right", GameInput.Device.Keyboard, SnapTurningConfig.Config.KeybindKeyRight);
         }
 
-        AddToggleOption(TOGGLE_CHANGED_ID_SEAMOTH, "Seamoth", Config.EnableSeamoth);
-        AddChoiceOption(CHOICE_CHANGED_ID_SEAMOTH_ANGLE, "Seamoth Angle", new string[] { "45", "90", "22.5" }, Config.SeamothAngleChoiceIndex);
+        AddToggleOption(TOGGLE_CHANGED_ID_SEAMOTH, "Seamoth", SnapTurningConfig.Config.EnableSeamoth);
+        AddChoiceOption(CHOICE_CHANGED_ID_SEAMOTH_ANGLE, "Seamoth Angle", new string[] { "45", "90", "22.5" }, SnapTurningConfig.Config.SeamothAngleChoiceIndex);
 
-        AddToggleOption(TOGGLE_CHANGED_ID_PRAWN, "Prawn Suit", Config.EnablePrawn);
-        AddChoiceOption(CHOICE_CHANGED_ID_PRAWN_ANGLE, "Prawn Suit Angle", new string[] { "45", "90", "22.5" }, Config.PrawnAngleChoiceIndex);
+        AddToggleOption(TOGGLE_CHANGED_ID_PRAWN, "Prawn Suit", SnapTurningConfig.Config.EnablePrawn);
+        AddChoiceOption(CHOICE_CHANGED_ID_PRAWN_ANGLE, "Prawn Suit Angle", new string[] { "45", "90", "22.5" }, SnapTurningConfig.Config.PrawnAngleChoiceIndex);
 
     }
 }
