@@ -18,7 +18,7 @@ namespace SubnauticaSnapTurningMod
 
         public void Awake()
         {
-            SnapTurningConfig.Load();
+            //Settings.GetSettings();
             OptionsPanelHandler.RegisterModOptions(new Options());
 
             harmony.PatchAll(Assembly.GetExecutingAssembly());
