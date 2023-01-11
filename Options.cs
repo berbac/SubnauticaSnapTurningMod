@@ -17,6 +17,7 @@ public class Options : ModOptions
 
     public Options() : base("Snap Turning")
     {
+        SnapTurningConfig.Config.Load();
         ToggleChanged += Options_ToggleChanged;
         ChoiceChanged += Options_ChoiceChanged;
         KeybindChanged += Options_KeybindChanged;
@@ -84,7 +85,6 @@ public class Options : ModOptions
 
     public override void BuildModOptions()
     {
-        SnapTurningConfig.Config.Load();
         AddToggleOption(TOGGLE_CHANGED_ID_SNAP_TURNING, "Enabled", SnapTurningConfig.Config.EnableSnapTurning);
         AddChoiceOption(CHOICE_CHANGED_ID_SNAP_ANGLE, "Angle", new string[] { "45", "90", "22.5" }, SnapTurningConfig.Config.SnapAngleChoiceIndex);
 
